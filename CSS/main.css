@@ -1,4 +1,18 @@
-.main>photo-canvas{
-    width: 400px;
-    height: 600px;
+body{
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+	font-size: 13px;
+	margin: 0px;
+}
+a ul li{
+	margin: 0px;
+	padding: 0px;
+}
+a{
+	text-decoration: none;
+}
+.main>.photo-canvas{
+	position: absolute;
+	top: 10%;
+	left: 40%;
 }
