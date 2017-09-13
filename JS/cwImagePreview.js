@@ -38,7 +38,6 @@ var ImagePreview = function(){
     monse.detectorTan = function(x,y){
     	imageObj.x = x - my_canvas.offsetLeft - (monse.x-my_canvas.offsetLeft);
     	imageObj.y = y -my_canvas.offsetTop - (monse.y-my_canvas.offsetTop);
-    	console.log(imageObj.x);
     }
     function init(){
         my_ctx.fillStyle = "beige";
