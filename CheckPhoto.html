@@ -18,49 +18,6 @@
     	photo.image.intoImage("./image/timg.jpg");
     	photo.drawImage(0);
 		photo.moveImage();
-		var Twinke = function(){
-			var my_canvas2 = document.getElementsByClassName('twinke')[0];
-			var my_ctx2 = my_canvas2.getContext('2d');
-			my_canvas2.height = '600';
-			my_canvas2.width = '1280';
-			var arc_objects = [];
-			function init(){
-				my_ctx2.fillStyle = "white";
-				my_ctx2.fillRect(0,0,my_canvas2.width,my_canvas2.height);
-			}
-			my_canvas2.addEventListener('click',function(e){
-				var s1 = Math.ceil(Math.random()*254);
-				var s2 = Math.ceil(Math.random()*254);
-				var s3 = Math.ceil(Math.random()*254);
-				var arc = {
-					x:e.clientX,
-					y:e.clientY,
-					color : s1+','+s2+','+s3,
-					reder:1,
-					r : 10
-				};
-				arc_objects.push(arc);
-			});
-			function arcDraw(){
-				my_ctx2.clearRect(0,0,my_canvas2.width,my_canvas2.height);
-				console.log(arc_objects.length);
-				for(var i = 0;i<arc_objects.length;i++){
-					my_ctx2.beginPath();
-					arc_objects[i].reder -=0.01;
-					my_ctx2.fillStyle = 'rgba('+arc_objects[i].color+','+arc_objects[i].reder+')';
-					arc_objects[i].r +=1;  
-					my_ctx2.arc(arc_objects[i].x,arc_objects[i].y,arc_objects[i].r,0,2*Math.PI);
-					my_ctx2.closePath();
-					my_ctx2.fill();
-				}
-				window.requestAnimationFrame(arcDraw);
-			}
-			return {
-				init:init,
-				arcDraw:arcDraw,
-				arc_objects:arc_objects
-			}
-		}
 		var rne = new Twinke();
 		rne.init();
 		rne.arcDraw();
