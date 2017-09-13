@@ -12,7 +12,11 @@ a{
 	text-decoration: none;
 }
 .main>.photo-canvas{
+	position: relative;
+}
+.main{
 	position: absolute;
-	top: 10%;
+	background-color: beige;
 	left: 40%;
+    top: 10%;
 }
