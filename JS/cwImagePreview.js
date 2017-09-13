@@ -8,11 +8,13 @@ monse_orien.prototype.setNext = function(successor){
 monse_orien.prototype.passNext = function(){
 	var res = this.fn.apply(this,arguments);
 	if(res = 'nextSuccessor'){
+		阿斯大大
 		return this.successor && this.successor.passNext(this.successor,arguments);
 	}
 }*/
 var SPEED = 0;
 var SCALE = 1;
+var HEI_WID = 1;
 var ImagePreview = function(){
     var my_canvas = document.getElementsByClassName('photo-canvas')[0];
     my_canvas.height = '500';
@@ -20,6 +22,7 @@ var ImagePreview = function(){
     var my_ctx = my_canvas.getContext('2d');
     var c_height = my_canvas.height;
     var c_width = my_canvas.width;
+    HEI_WID = c_height/c_width;
     var vx = SPEED;
     var vy = SPEED;
     var imageObj = {
@@ -52,12 +55,14 @@ var ImagePreview = function(){
 		var img = new Image();
 		img = imageObj.imgsrcs[n];
 		img.onload = function(){
-			my_ctx.drawImage(img,0,0,img.width,img.height,0,0,c_width,c_height);
+			my_ctx.drawImage(img,0,0,img.width,img.height,100,100,c_width,c_height);
 		}
 	}
     function changeImage(){};
     function moveImage(){
+    	
     	my_ctx.clearRect(0,0,c_width,c_height);
+    	
 		var img = new Image();
 		var n = imageObj.num;
 		img = imageObj.imgsrcs[n];
@@ -71,10 +76,18 @@ var ImagePreview = function(){
     	monse.detectorTan(e.clientX,e.clientY);
     }
     function imageScale(e){
-    	if(e.wheelDelta>0)
+    	if(e.wheelDelta>0){
+    		imageObj.x -=11/HEI_WID;
+    		imageObj.y -=8;
     		SCALE +=0.05;
-    	else
+    	}
+    	else{
+    		imageObj.x +=11/HEI_WID;
+    		imageObj.y +=8;
     		SCALE -=0.05;
+    	}
+	    monse.x = -imageObj.x;
+    	monse.y = -imageObj.y;
     }
     function touchImgae(){//图片操作以及鼠标事件监听
     	my_canvas.addEventListener('mouseenter',function(){
@@ -84,10 +97,11 @@ var ImagePreview = function(){
 			monse.x += e.clientX;
     		monse.y += e.clientY;
     		my_canvas.addEventListener('mousemove',hanlder,false);
+    		
     	})
     	my_canvas.addEventListener('mouseup',function(e){
     		monse.x = -imageObj.x;
-    		monse.y = - imageObj.y;
+    		monse.y = -imageObj.y;
 			my_canvas.removeEventListener('mousemove',hanlder,false);
     	});
     	my_canvas.addEventListener('mouseleave',function(e){
