@@ -17,16 +17,14 @@ var SCALE = 1;
 var HEI_WID = 1;
 var TURN = 15;
 var MAX_SCALE = 2;
+var  HEI_WID;
 var ImagePreview = function(){
     var my_canvas = document.getElementsByClassName('photo-canvas')[0];
-    my_canvas.height = '500';
-    my_canvas.width = '300'
     var my_ctx = my_canvas.getContext('2d');
-    var c_height = my_canvas.height;
-    var c_width = my_canvas.width;
-    HEI_WID = c_height/c_width;
     var vx = SPEED;
     var vy = SPEED;
+    var c_height;
+    var c_width;
     var imageObj = {
     	imgsrcs:[],
     	num:0,
@@ -50,10 +48,18 @@ var ImagePreview = function(){
     		imageObj.y = -(SCALE*c_height - c_height);	
     }
     function init(){
-        my_ctx.fillStyle = "beige";
-        my_ctx.fillRect(0,0,c_width,c_height);
+		canvasInit(500,300);
         touchImgae();
     };
+    function canvasInit(height,width){
+    	my_canvas.height = ''+height;
+    	my_canvas.width = ''+width;
+	    c_height = my_canvas.height;
+	    c_width = my_canvas.width;
+	    HEI_WID = c_height/c_width;
+        my_ctx.fillStyle = "beige";
+        my_ctx.fillRect(0,0,c_width,c_height);
+    }
     imageObj.intoImage = function(src){
     	var image = new Image();
     	image.src = src;
@@ -64,6 +70,7 @@ var ImagePreview = function(){
 		var img = new Image();
 		img = imageObj.imgsrcs[n];
 		img.onload = function(){
+			canvasInit(400,600);
 			my_ctx.drawImage(img,0,0,img.width,img.height,100,100,c_width,c_height);
 		}
 	}
