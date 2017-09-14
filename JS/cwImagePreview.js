@@ -15,6 +15,7 @@ monse_orien.prototype.passNext = function(){
 var SPEED = 0;
 var SCALE = 1;
 var HEI_WID = 1;
+var initas = 10;
 var ImagePreview = function(){
     var my_canvas = document.getElementsByClassName('photo-canvas')[0];
     my_canvas.height = '500';
