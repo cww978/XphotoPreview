@@ -15,6 +15,8 @@ monse_orien.prototype.passNext = function(){
 var SPEED = 0;
 var SCALE = 1;
 var HEI_WID = 1;
+var TURN = 15;
+var MAX_SCALE = 2;
 var ImagePreview = function(){
     var my_canvas = document.getElementsByClassName('photo-canvas')[0];
     my_canvas.height = '500';
@@ -38,6 +40,14 @@ var ImagePreview = function(){
     monse.detectorTan = function(x,y){
     	imageObj.x = x - my_canvas.offsetLeft - (monse.x-my_canvas.offsetLeft);
     	imageObj.y = y -my_canvas.offsetTop - (monse.y-my_canvas.offsetTop);
+    	if(imageObj.x>=0)
+    		imageObj.x =0;
+    	if(Math.abs(imageObj.x)>Math.abs(SCALE*c_width - c_width))
+    		imageObj.x = -(SCALE*c_width - c_width);
+    	if(imageObj.y>=0)
+    		imageObj.y =0;
+    	if(Math.abs(imageObj.y)>Math.abs(SCALE*c_height - c_height))
+    		imageObj.y = -(SCALE*c_height - c_height);	
     }
     function init(){
         my_ctx.fillStyle = "beige";
@@ -57,11 +67,25 @@ var ImagePreview = function(){
 			my_ctx.drawImage(img,0,0,img.width,img.height,100,100,c_width,c_height);
 		}
 	}
-    function changeImage(){};
+    function xyto0(x,y){
+    	if(x<0)
+    		imageObj.x += TURN;
+    	else
+    		imageObj.x -= TURN;
+    	if(Math.abs(x) - 0 < TURN)
+    		imageObj.x = 0;
+    	if(y<0)
+    		imageObj.y +=TURN;
+    	else
+    		imageObj.y -=TURN;
+    	if(Math.abs(y) - 0 <TURN)
+    		imageObj.y = 0;	
+    };
     function moveImage(){
-    	
-    	my_ctx.clearRect(0,0,c_width,c_height);
-    	
+    	if(SCALE === 1){
+    		xyto0(imageObj.x,imageObj.y);
+    	}	
+    	my_ctx.clearRect(0,0,c_width,c_height);	
 		var img = new Image();
 		var n = imageObj.num;
 		img = imageObj.imgsrcs[n];
@@ -76,14 +100,22 @@ var ImagePreview = function(){
     }
     function imageScale(e){
     	if(e.wheelDelta>0){
-    		imageObj.x -=11/HEI_WID;
-    		imageObj.y -=8;
-    		SCALE +=0.05;
+    		if(SCALE>=MAX_SCALE){
+    			SCALE = MAX_SCALE;
+    			return false;
+    		}	
+    		imageObj.x -=20/HEI_WID;
+    		imageObj.y -=20;
+    		SCALE +=0.1;
     	}
     	else{
-    		imageObj.x +=11/HEI_WID;
-    		imageObj.y +=8;
-    		SCALE -=0.05;
+    		if(SCALE<=1){
+    			SCALE = 1;
+    			return false;
+    		}
+    		imageObj.x +=20/HEI_WID;
+    		imageObj.y +=20;
+    		SCALE -=0.1;
     	}
 	    monse.x = -imageObj.x;
     	monse.y = -imageObj.y;
@@ -148,7 +180,6 @@ var Twinke = function(){
 	});
 	function arcDraw(){
 		my_ctx2.clearRect(0,0,my_canvas2.width,my_canvas2.height);
-		console.log(arc_objects.length);
 		for(var i = 0;i<arc_objects.length;i++){
 			my_ctx2.beginPath();
 			arc_objects[i].reder -=0.01;
